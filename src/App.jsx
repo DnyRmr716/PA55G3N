@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FaGithub } from 'react-icons/fa';
+
 
 const evaluatePasswordStrength = (password) => {
   let strength = 0;
@@ -166,6 +168,15 @@ function App() {
         {isCopied && (
           <p className="copied-notification">Password copied to clipboard!</p>
         )}
+      </div>
+      <div className="github-link">
+        <a
+          href="https://github.com/DnyRmr716/password-generator-project-frontend/tree/main"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaGithub size={32} color="#FF5A5F" />
+        </a>
       </div>
     </div>
   );
