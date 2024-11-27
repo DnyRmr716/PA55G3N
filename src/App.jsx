@@ -31,7 +31,7 @@ function App() {
 
   const handleGeneratePassword = async () => {
     try {
-      const response = await fetch('http://localhost:3000/generate-password', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ length, options }),
