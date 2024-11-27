@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
-
 const evaluatePasswordStrength = (password) => {
   let strength = 0;
 
@@ -11,11 +10,11 @@ const evaluatePasswordStrength = (password) => {
   if (/[0-9]/.test(password)) strength++;
   if (/[\W_]/.test(password)) strength++;
 
-  if (strength === 5) return "Very Strong";
-  if (strength === 4) return "Strong";
-  if (strength === 3) return "Medium";
-  if (strength === 2) return "Weak";
-  return "Very Weak";
+  if (strength === 5) return 'Very Strong';
+  if (strength === 4) return 'Strong';
+  if (strength === 3) return 'Medium';
+  if (strength === 2) return 'Weak';
+  return 'Very Weak';
 };
 
 function App() {
@@ -34,16 +33,14 @@ function App() {
     try {
       const response = await fetch('http://localhost:3000/generate-password', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ length, options }),
       });
       const data = await response.json();
       setPassword(data.password);
-  
+
       const strength = evaluatePasswordStrength(data.password);
-      console.log("Password Strength:", strength);
+      console.log('Password Strength:', strength);
       setPasswordStrength(strength);
     } catch (error) {
       console.error('Error generating password:', error);
@@ -52,30 +49,9 @@ function App() {
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(password).then(() => {
-      setIsCopied(true); 
+      setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     });
-  };
-  
-
-  const renderStrengthBar = (strength) => {
-    const strengthLevels = ["Very Weak", "Weak", "Medium", "Strong", "Very Strong"];
-    const activeIndex = strengthLevels.indexOf(strength);
-
-    return (
-      <div className="strength-bar">
-        {strengthLevels.map((level, index) => (
-          <div
-            key={level}
-            className={
-              index <= activeIndex
-                ? `active-${level.toLowerCase().replace(' ', '-')}`
-                : ''
-            }
-          ></div>
-        ))}
-      </div>
-    );
   };
 
   return (
@@ -152,18 +128,17 @@ function App() {
           </div>
           <button onClick={handleGeneratePassword}>Generate Password</button>
           {password && (
-          <div className="password-section">
-            <h2>Your Password:</h2>
-            <div className="password-container">
-              <p>{password}</p>
+            <div className="password-section">
+              <h2>Your Password:</h2>
+              <div className="password-container">
+                <p>{password}</p>
+              </div>
+              <p>
+                Password Strength: <strong>{passwordStrength}</strong>
+              </p>
+              <button onClick={handleCopyToClipboard}>Copy to Clipboard</button>
             </div>
-            <p>
-              Password Strength: <strong>{passwordStrength}</strong>
-            </p>
-            {renderStrengthBar(passwordStrength)}
-            <button onClick={handleCopyToClipboard}>Copy to Clipboard</button>
-          </div>
-        )}
+          )}
         </div>
         {isCopied && (
           <p className="copied-notification">Password copied to clipboard!</p>
@@ -183,4 +158,3 @@ function App() {
 }
 
 export default App;
-      
