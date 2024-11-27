@@ -31,14 +31,14 @@ function App() {
 
   const handleGeneratePassword = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/generate-password`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/generate-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ length, options }),
       });
       const data = await response.json();
       setPassword(data.password);
-
+  
       const strength = evaluatePasswordStrength(data.password);
       console.log('Password Strength:', strength);
       setPasswordStrength(strength);
